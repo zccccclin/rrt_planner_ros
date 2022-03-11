@@ -42,4 +42,23 @@ Move preconfigured maps into [/resource](https://github.com/zccccclin/rrt_planne
 After `roslaunch rrt_planner rrt_planner.launch`, on the same terminal enter **1** for loading of map.
 Enter **map file name** (eg. map1.png). Image window will appear and Rviz window should load up the occupancy grid as well.
 ![Loaded images](https://github.com/zccccclin/rrt_planner_ros/blob/eca1040a989f796766302cef5ad7ce52150e04a6/README_img/load.png)
-
+To **add initial position and goal position** either use 2D Pose Estimate and 2D Nav Goal in RVIZ or follow instruction in same terminal to enter x and y coordinates.
+Once Both initial and goal position added, planning will take place and the process will be shown in image window while the path will be produced in Rviz.
+![Finished image](https://github.com/zccccclin/rrt_planner_ros/blob/39849a9d8c0d3dbafb9244685aad7f4d677e35a0/README_img/finished.png)
+Press *Ctrl + C* on terminal to end ROS Nodes.
+### 2. Creating custom maps for planning
+After `roslaunch rrt_planner rrt_planner.launch`, on the same terminal enter **2** for making of map.
+Enter **width** then **height** on same terminal to create a blank drawing board. 
+Use *mouse + left click* to draw Obstacles. Brush size can be adjusted on top while erase can be toggled on and off.
+![Custom map creation]()
+After drawing, press *ESCAPE* key to publish created map to planner node. Image window will appear and Rviz should load up the occupancy grid.
+Use the same method as feature 1. to set initial and goal position
+Use the same method to terminate and end ROS Nodes.
+### 3. Configuration
+The configurations for the planner node can be found in [/cfg/config.yaml](https://github.com/zccccclin/rrt_planner_ros/blob/39849a9d8c0d3dbafb9244685aad7f4d677e35a0/cfg/config.yaml). 
+Tunable parameters are as followed:
+- **visualize_plan** parameter to visualize tree expansion and final path traceback    
+- **use_star** #parameter to toggle RRT* on and off
+- **expand_dis** #max expansion distance for each step branch
+- **disk_size** #circular disk radius for RRT* optimization check, set to > 3 * expand_dis to see effect.
+![RRT*](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT*.gif) ![RRT](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT.gif)
