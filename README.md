@@ -1,35 +1,45 @@
 # RRT for Path Planning in ROS
 
 ## Introduction
-In this repository I have modified and implemented the Rapidly Exploring Random Trees (RRT) algorithm to plan collision-free paths in a 2D environment.
-In addition, 
+This repository contains my C++ implementation of Rapidly Exploring Random Trees (RRT) algorithm in ROS to plan collision-free paths in a 2D environment.
+
+My implementation includes the following elements:
+1. RRT algorithm (C++ planner node that implements basic RRT with configurable bias direction towards goal)
+2. RRT* algorithm (RRT* Improvement implemented within planner node)
+3. Map server (Map server node for loading of maps or creation of maps)
 
 ## How to run it?
-Place it in your catkin workspace `src` folder and build it using:
-```bash
+Download the modified rrt_planner_ros.zip and extract content to src folder after `cd src` use gitclone in next step. Ignore this step if using `git clone`.
+#### 1. Package setup
+```
+cd ~
+mkdir rrt_ws
+cd rrt_ws
+mkdir src
+cd src
+git clone https://github.com/zccccclin/rrt_planner_ros.git  
+cd ..
 catkin build
 ```
-
-You can run the launch file given in the `launch` folder using:
-```bash
+#### 2. Make python node executable and source workspace
+`source devel/setup.bash` is always necessary for new terminals
+```
+source devel/setup.ash
+cd src/rrt_planner_ros/src
+chmod +x map_server.py
+```
+###3. Running the Package
+```
 roslaunch rrt_planner rrt_planner.launch
 ```
+## How to use it?
+The package includes a custom map server node that allows for creation of own map as well as the original ROS map server node that simply reads the maps.
+To use the **original ROS map server** node set custom_map_server argument to 0 during launch step: `roslaunch rrt_planner rrt_planner.launch custom_map_server:=0`. The map parameters can be changed at [/cfg/map.yaml](https://github.com/zccccclin/rrt_planner_ros/blob/473e0e9d37aec447e17b8709e759ba014eef21f4/cfg/map.yaml).
 
-This launch file automatically launches three nodes:
-- **RViz** For visualization
-- **Map Server** to load a map from a .png file and publish it as a `nav_msgs::OccupancyGrid` on the `/map` topic
-- **RRT Planner** to receive a map, initial pose, and goal pose, and calculate and publish a collision-free path as a `nav_msgs::Path` msg
+For the **custom map server node** roslaunch normally or set custom_map_server argument to 1. Following sections will explain the features for custom map server node.
+### 1. Loading example/preconfigured maps
+Move preconfigured maps into [/resource](https://github.com/zccccclin/rrt_planner_ros/tree/main/resources) folder.
+After `roslaunch rrt_planner rrt_planner.launch`, on the same terminal enter **1** for loading of map.
+Enter **map file name** (eg. map1.png). Image window will appear and Rviz window should load up the occupancy grid as well.
+![Loaded images](https://github.com/zccccclin/rrt_planner_ros/blob/eca1040a989f796766302cef5ad7ce52150e04a6/README_img/load.png)
 
-#### Map Server
-We have provided 5 example map images in the [resources](resources) directory that can be used to test your RRT implementation.
-The map server node is responsible for loading a map file and publishing it as a `nav_msgs::OccupancyGrid` on the `/map` topic.
-To select the map file that should be loaded and published, configure the parameters in [cfg/map.yaml](cfg/map.yaml) file.
-
-#### RViz
-When a map has been loaded successfully it should be visible in RViz. The user can then set the initial pose and the goal pose through RViz.
-Press the `2D Pose Estimate` button in RViz to set the initial pose. Press the `2D Nav Goal` button in RViz to set the goal pose.
-Or you can provide the same through the topics `/initialpose` and `/move_base_simple/goal` respectively.
-
-## Tuning
-Parameters can be provided to the RRT Planner node using the [cfg/config.yaml](cfg/config.yaml) file.
-Certain RRT parameters can be made configurable by adding them to this file.
