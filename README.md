@@ -61,4 +61,5 @@ Tunable parameters are as followed:
 - **use_star** #parameter to toggle RRT* on and off
 - **expand_dis** #max expansion distance for each step branch
 - **disk_size** #circular disk radius for RRT* optimization check, set to > 3 * expand_dis to see effect.
-![RRT*](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT*.gif) ![RRT](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT.gif)
+![RRT*](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT*.gif) RRT* Result
+![RRT](https://github.com/zccccclin/rrt_planner_ros/blob/da611ff83f23418d456d1b5d76abd773489f2f90/README_img/RRT.gif) RRT Result
