@@ -1,0 +1,8 @@
+map_topic: '/map'
+path_topic: '/path'
+
+# Add more parameters here to make the RRT algorithm tunable
+visualize_plan: true #parameter to visualize tree expansion and final path traceback
+use_star: true #parameter to toggle RRT* on and off
+expand_dis: 10 #max expansion distance for each branch
+disk_size: 50 #circular disk radius for RRT* optimization check, set to > 3* expand_dis to see effect.
